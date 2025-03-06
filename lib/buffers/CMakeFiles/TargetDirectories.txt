@@ -1,0 +1,4 @@
+/home/lowe/projects/c/lib/buffers/CMakeFiles/buffers.dir
+/home/lowe/projects/c/lib/buffers/CMakeFiles/test.dir
+/home/lowe/projects/c/lib/buffers/CMakeFiles/edit_cache.dir
+/home/lowe/projects/c/lib/buffers/CMakeFiles/rebuild_cache.dir

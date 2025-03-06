@@ -1,0 +1,1 @@
+/usr/bin/cc -Wl,--dependency-file=CMakeFiles/test.dir/link.d CMakeFiles/test.dir/test.c.o CMakeFiles/test.dir/buffers.c.o -o test  libbuffers.a
