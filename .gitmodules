@@ -1,3 +1,6 @@
 [submodule "test/ctest"]
 	path = test/ctest
 	url = https://github.com/bvdberg/ctest.git
+[submodule "lib/loggers"]
+	path = lib/loggers
+	url = https://github.com/rxi/log.c.git

@@ -4,12 +4,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include "buffers.h"
-
+#define LOG_USE_COLOR
+#define DLOG_USE_COLOR
+#include "../loggers/src/log.h"
 
 Buffer* buffcreate( size_t capacity, size_t elements_count ){
   Buffer *buff = malloc(sizeof(Buffer));
   buff->buffer_capacity = capacity;
   buff->elements_capacity =  elements_count;
+  buff->len = 0;
   buff->elements = malloc(sizeof(void*) * elements_count);
   return buff;
 }
@@ -54,6 +57,8 @@ void buffbefore_fill(Buffer* buff, size_t size ){
 
 void buffill(Buffer* buff, size_t size ){
   void* nmem = (void*) buff->next;
+  log_debug("len %zu and mem %zu", (size_t)buff->len, (size_t) nmem);
+  log_debug(" capacity %zu\n",  (size_t) buff->elements_capacity);
   buff->elements[buff->len] = nmem;
   buff->next += size;
   buff->len++;

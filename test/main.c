@@ -1,7 +1,6 @@
 #include "../lib/buffers/buffers.h"
 #include "ctest/ctest.h"
 #include <assert.h>
-#define CTEST_COLOR_OK
 
 CTEST(buffer, creation_of_buffer) {
   Buffer *buffer = buffinit(10, 10);
@@ -36,7 +35,6 @@ CTEST(buffer, actual_value){
   }
   ASSERT_STR(buffer->buffer, hello_world);
   ASSERT_EQUAL_U(strlen(buffer->buffer), strlen(hello_world));
-  CTEST_LOG("the new buffer: %s\n", (char*)buffer->buffer);
 };
 
 
@@ -51,20 +49,16 @@ buffill(buff, size);
 
 
 CTEST(buffer, storing_strings){
-    CTEST_LOG("Before All");
   Buffer* buffer = buffinit(1000 * 10, 10);
   for(size_t i = 0; i < 10; i++){
     char words[100]; 
   size_t size = sprintf(words,  "Hello world! for [%zu] times", i);
   char* wordlist = malloc((size + 1) * sizeof(char));
-  CTEST_LOG("created a worklist\n");
   snprintf(wordlist, sizeof(words), "Hello world! for [%zu] times", i);
-  CTEST_LOG("providing value for worklinst\n");
   buff_append_str(buffer, size, wordlist);
     free(wordlist);
   }
 
-  CTEST_LOG("%s", (char*)buffer->elements[0] );
   for(size_t i = 0; i < buffer->len; i++){
     CTEST_LOG("%s\n", ((char*)buffer->elements[i]));
 
