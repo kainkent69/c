@@ -61,8 +61,8 @@ CTEST(buffer, storing_strings){
   }
 
   for(size_t i = 0; i < buffer->len; i++){
-    char* test = "TEST";
-    bool verbose = is_verbose() ;
+    char* filter = filtered_verbose(); 
+    bool verbose = is_filtered_verbose_of("test")  ;
     char* content = ((char*)buffer->elements[i]);
     char const *hello_world = "Hello world!";
     char* sample = malloc(strlen(hello_world) + 1);

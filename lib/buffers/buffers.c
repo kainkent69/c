@@ -53,7 +53,7 @@ void buffBeforeFill(Buffer* buff, size_t size) {
 }
 
 void buffFill(Buffer* buff, size_t size) {
-  bool verbose = is_verbose();
+  bool verbose =  is_filtered_verbose_of("buffer");
   void* nmem = (void*)buff->next;
   if(verbose) log_debug("len %zu \n mem %zu \n capacity %zu\n", (size_t)buff->len, (size_t)nmem, (size_t)buff->elements_capacity);
   buff->elements[buff->len] = nmem;

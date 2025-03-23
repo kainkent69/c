@@ -12,4 +12,15 @@ bool is_verbose();
   * @return the string or NULL if it is not filtered
   **/
 char* filtered_verbose();
+
+/** cheks if it is filted 
+  * @return if there are filtered
+**/
+
+bool is_filtered_verbose();
+/**
+* check if vervose is filted something 
+* @param filter is the filter text
+**/
+bool is_filtered_verbose_of(char* filter);
 #endif
