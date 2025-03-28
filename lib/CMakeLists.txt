@@ -4,5 +4,6 @@ add_library(logger  ./loggers/src/log.c )
 target_include_directories(logger PUBLIC ./loggers/src/ )
 target_compile_options(logger PRIVATE -g)
 add_subdirectory(./verbose)
+ADD_SUBDIRECTORY(./arena)
 add_subdirectory(./buffers)
 
