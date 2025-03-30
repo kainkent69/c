@@ -10,7 +10,7 @@ while true; do
     if [ "$current_modified_timestamps" != "$last_modified_timestamps" ]; then
          clear
         echo "Changes detected at: $current_time, recompiling..."
-         bash compile && bash tests
+          ./compile && ./tests $1
         last_modified_timestamps="$current_modified_timestamps"
     fi
 

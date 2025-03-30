@@ -12,27 +12,36 @@
 
 
 typedef struct Region {
-     struct Region* next;                      // The next region to make linked list
-     struct Region* prev;                      // the previews region  
-    void* parent;
-     size_t start,                              // The memory address of the region  
-            end,                                // The end of the memory  to get the capacity 
-            ID;                                 // The  ID of the region should be base 0
+   void*  parent;                      // The Arena address
+   size_t    end,                      // The end of the memory  to get the capacity 
+              ID,                      // The  ID of the region should be base 0
+           start,                      // The start or the memory of the array
+            diff;                      // The allownce of storage when used
+   bool     free;                      // If the region is freed
 } Region;
 
 
 
 typedef struct Arena {
-    size_t start,                               // the start of the memroy 
-    end,                                        // the end of the memory to make easy calculation 
-    occupied,                                   // The number of bytes being filled 
-        count;                                  // The number of regions made
-    Region** regions;                           // the regions an multi-deminsional array
-    Region** freed_regions;                     // the regions that are freed
+    size_t     start,                  // the start of the memroy 
+                 end,                  // the end of the memory to make easy calculation 
+            occupied,                  // The number of bytes being filled 
+               count;                  // The number of regions made
+    Region** regions;                  // the regions an multi-deminsional array
 } Arena;
 
-#define region_capacity(region) (region->end - region->start)
+
+// for making linked list
+/** get the next region **/
+#define region_next(region) (arena->regions[region->ID + 1])
+/** get the previews region **/
+#define region_prev(region) (region->ID > 0 ? arena->regions[region->ID + 1] : NULL;)
+/** get the start of the region **/
+/** The capacity of a region **/ 
+#define region_capacity(region) (region->end - region->start - region->diff)
+/** See if the region is the first child **/
 #define region_first_child(region ) (region->ID == 0)
+/** Realloc allocate region from arena **/
 #define region_alloc(size) region_allocate(arena, size)
 
 /**
@@ -42,6 +51,22 @@ typedef struct Arena {
  **/
 Arena* create_arena(size_t capacity);
 
+/**
+ * allocate a region for the arena
+ * @param *arena is the source arena
+ * @param size is the number of bytes to save
+ * @return a newly created reagion
+ **/
+Region* region_allocate(Arena* arena, size_t size); 
+
+
+/**
+ * allocate a region for the arena
+ * @param *arena is the source arena
+ * @param size is the number of bytes to save
+ * @return a newly created reagion
+ **/
+Region* region_reallocate( Region* region, size_t size);
 /**
  * allocate a region for the arena
  * @param *arena is the source arena
