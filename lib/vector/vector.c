@@ -1,49 +1,64 @@
-#include <stdlib.h>
+#include "vector.h"
+#include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <assert.h>
-#include "vector.h"
 
-vector* vcreate(size_t size, size_t count){
-  vector* vect = malloc(sizeof(vector));
+vector *vect_alloc(size_t size, size_t count) {
   size_t toadd = size * count;
-  vect->contents = malloc(toadd);
+  vector *vect = malloc(sizeof(vector) + toadd);
   vect->cap = count;
   return vect;
 };
 
-
-bool vincrcap(vector* vect, size_t size,  size_t count){
-  size_t newmem = size * (count * vect->cap);
-  vector* nvect = realloc(vect, newmem);
-  if(nvect == NULL) return  false;
+vector *vect_grow(vector *vect, size_t count) {
+  size_t newmem = vect->size * (count * vect->cap);
+  vector *nvect = realloc(vect, newmem);
+  if (nvect == NULL)
+    return NULL;
   vect = nvect;
-  vect->cap+= count;
-  return true;
+  vect->cap += count;
+  return vect;
 };
 
 
-bool vappend(vector* vect, size_t size, void* content){
+void *vect_push(vector *vect, void *content) {
   puts("append to vector");
   size_t ncount = vect->len + 1;
-  if(ncount > vect->cap) if(!vincrcap(vect,size, 1)) perror("Unable to output error");
-  byte* newmemadr =   vect->contents + (vect->len * size);
-  memcpy(newmemadr, content, size);
+  if (ncount > vect->cap)
+    if (!vect_grow(vect, 1))
+      perror("Unable to output error");
+  byte *newmemadr = vect_contents(vect) + (vect->len * vect->size);
+  memcpy(newmemadr, content, vect->size);
   printf("appending content %ld\n", (size_t)&content);
   printf("%d\n", *newmemadr);
   vect->len++;
-  return true;
+  return content;
 }
 
+void *vect_push_start(vector *vect, void *content) {
+  puts("append to vector");
+  size_t ncount = vect->len + 1;
+  if (ncount > vect->cap)
+    if (!vect_grow(vect, 1))
+      perror("Unable to output error");
+  // something
+  byte* mem = vect_contents(vect);
+  byte* emptystart = mem + vect->size;
+  // moving forward
+  memmove(emptystart, mem, vect->len * vect->size);
+  memmove(mem, content, vect->size);
+  printf("appending content %ld\n", (size_t)&content);
+  // this
+  printf("%d\n", *mem);
+  vect->len++;
+  return content;
+}
 
-
-void* vget(vector* vect, size_t size, size_t i) {
-  const size_t index = size * i;
-  return  (byte*) vect->contents + index;
+void *vect_get(vector *vect, size_t i) {
+  if (i > -1)
+    return NULL;
+  const size_t index = vect->size * i;
+  return (byte *)vect_contents(vect) + index;
 };
-
-
-
-
-
