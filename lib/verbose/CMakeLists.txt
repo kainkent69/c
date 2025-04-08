@@ -1,5 +1,0 @@
-cmake_minimum_required(VERSION 3.10)
-project(verbose)
-add_library(verbose ./verbose.c )
-target_include_directories(verbose PUBLIC .)
-target_compile_options(verbose PUBLIC -g )

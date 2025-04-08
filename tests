@@ -1,2 +1,0 @@
-name=$(find ./build/test ! -path ./build/test/CMakeFiles | grep $1 -m 1)
-$name
