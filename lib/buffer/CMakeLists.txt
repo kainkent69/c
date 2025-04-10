@@ -1,0 +1,5 @@
+# libraries
+PROJECT(buffer VERSION 0.0.1)
+ADD_LIBRARY(buffer  STATIC ./buffer.c )
+TARGET_COMPILE_OPTIONS(buffer PUBLIC "-g")
+TARGET_INCLUDE_DIRECTORIES(buffer PUBLIC .)
